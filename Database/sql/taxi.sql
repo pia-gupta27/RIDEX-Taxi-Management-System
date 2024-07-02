@@ -1,0 +1,12 @@
+INSERT INTO TAXI VALUES(101,'T0501','BENZE 300',to_date('01/01/2017','dd/mm/yyyy'),'SUV','Available',1);
+INSERT INTO TAXI VALUES(102,'T0502','MACRO 500',to_date('01/01/2016','dd/mm/yyyy'),'Standard','Not Available',2);
+INSERT INTO TAXI VALUES(103,'T0503','MINI 400',to_date('01/01/2009','dd/mm/yyyy'),'Economy','Not Available',3);
+INSERT INTO TAXI VALUES(104,'T0504','XUV 300',to_date('01/01/2010','dd/mm/yyyy'),'SUV','Available',4);
+INSERT INTO TAXI VALUES(105,'T0505','BREZZA 300',to_date('01/01/2019','dd/mm/yyyy'),'Premium','Available',5);
+INSERT INTO TAXI VALUES(106,'T0506','BENZE 900',to_date('01/01/2019','dd/mm/yyyy'),'SUV','Not Available',6);
+INSERT INTO TAXI VALUES(107,'T0507','SWIFT 500',to_date('01/01/2017','dd/mm/yyyy'),'Standard','Available',7);
+INSERT INTO TAXI VALUES(108,'T0508','XUV 700',to_date('01/01/2019','dd/mm/yyyy'),'SUV','Not Available',8);
+INSERT INTO TAXI VALUES(109,'T0509','MINI 300',to_date('01/01/2020','dd/mm/yyyy'),'Minivan','Available',9);
+INSERT INTO TAXI VALUES(110,'T0510','MACRO 900',to_date('01/01/2019','dd/mm/yyyy'),'Premium','Available',10);
+INSERT INTO TAXI VALUES(111,'T0511','WAGON 300',to_date('01/01/2018','dd/mm/yyyy'),'Economy','Not Available',1);
+INSERT INTO TAXI VALUES(112,'T0512','MAGIC 300',to_date('01/01/2011','dd/mm/yyyy'),'Minivan','Available',2);

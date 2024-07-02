@@ -1,0 +1,356 @@
+CREATE TABLE TAXI (
+    Taxi_id integer NOT NULL,
+    Registration_no VARCHAR(20),
+    Taxi_Model VARCHAR(20),
+    Taxi_Year DATE,
+    Taxi_type VARCHAR(20),
+    Status VARCHAR(20),
+    Driver_id integer,
+    PRIMARY KEY (Taxi_id),
+    UNIQUE (Registration_no)
+);
+
+
+CREATE TABLE USER_TBL (
+    Usr_id integer NOT NULL,
+    F_name VARCHAR(20),
+    L_name VARCHAR(20),
+    Contat_no integer,
+    Gender VARCHAR(10),
+    Address VARCHAR(50),
+    Taxi_id integer,
+    PRIMARY KEY (Usr_id)
+);
+
+
+CREATE TABLE DRIVER (
+    Driver_id integer NOT NULL,
+    F_name VARCHAR(10),
+    L_name VARCHAR(20),
+    Gender VARCHAR(10),
+    Conatct_no VARCHAR(20),
+    Rating integer,
+    Age integer,
+    PRIMARY KEY (Driver_id)
+);
+
+
+CREATE TABLE TRIP_DETAILS (
+    Trip_id integer NOT NULL,
+    Trip_date DATE,
+    Trip_amt decimal(10,2),
+    Driver_id integer,
+    Usr_id integer,
+    Taxi_id integer,
+    Strt_time TIMESTAMP,
+    End_time TIMESTAMP,
+    PRIMARY KEY (Trip_id)
+);
+
+
+CREATE TABLE BILL_DETAILS (
+    Bill_no integer NOT NULL,
+    Bill_date DATE,
+    Advance_amt decimal(10,2),
+    Discount_amt decimal(10,2),
+    Total_amt decimal(10,2),
+    Usr_id integer,
+    Trip_id integer,
+    PRIMARY KEY (Bill_no),
+    UNIQUE (Trip_id)
+);
+
+
+CREATE TABLE CUSTOMER_SERVICE (
+    Emp_id integer NOT NULL,
+    F_name VARCHAR(20),
+    L_name VARCHAR(20),
+    PRIMARY KEY (Emp_id)
+);
+
+
+CREATE TABLE FEEDBACK (
+    Fbk_id integer NOT NULL,
+    Message VARCHAR(140),
+    Email VARCHAR(50),
+    Emp_id integer,
+    Usr_id integer,
+    Trip_id integer,
+    PRIMARY KEY (Fbk_id),
+    UNIQUE (Emp_id)
+);
+
+
+CREATE TABLE OWNS (
+    Owner_id integer NOT NULL,
+    No_Cars integer,
+    PRIMARY KEY (Owner_id)
+);
+
+
+CREATE TABLE OWNER_TAXI (
+    Owner_id integer NOT NULL,
+    Taxi_id integer,
+    PRIMARY KEY (Owner_id, Taxi_id)
+);
+
+
+CREATE TABLE INDIVIDUAL (
+    Ssn integer NOT NULL,
+    Name VARCHAR(20),
+    Owner_id integer,
+    PRIMARY KEY (Ssn)
+);
+
+
+CREATE TABLE TAXI_SERVICE_COMPANY (
+    Tsc_id integer NOT NULL,
+    Tsc_name VARCHAR(20),
+    Owner_id integer,
+    PRIMARY KEY (Tsc_id)
+);
+
+--------------------------------------------------------------------------------------------------------------------
+/*CONSTRAINTS*/
+
+ALTER TABLE TAXI ADD CONSTRAINT fk1 FOREIGN KEY (Driver_id) REFERENCES DRIVER(Driver_id) ON DELETE CASCADE;
+ALTER TABLE USER_TBL ADD CONSTRAINT fk2 FOREIGN KEY (Taxi_id) REFERENCES TAXI(Taxi_id) ON DELETE CASCADE;
+ALTER TABLE TRIP_DETAILS ADD CONSTRAINT fk3 FOREIGN KEY (Driver_id) REFERENCES DRIVER(Driver_id) ON DELETE CASCADE;
+ALTER TABLE TRIP_DETAILS ADD CONSTRAINT fk4 FOREIGN KEY (Usr_id) REFERENCES USER_TBL(Usr_id) ON DELETE CASCADE;
+ALTER TABLE TRIP_DETAILS ADD CONSTRAINT fk5 FOREIGN KEY (Taxi_id) REFERENCES TAXI(Taxi_id) ON DELETE CASCADE;
+ALTER TABLE BILL_DETAILS ADD CONSTRAINT fk6 FOREIGN KEY (Trip_id) REFERENCES TRIP_DETAILS(Trip_id) ON DELETE CASCADE;
+ALTER TABLE BILL_DETAILS ADD CONSTRAINT fk7 FOREIGN KEY (Usr_id) REFERENCES USER_TBL(Usr_id) ON DELETE CASCADE;
+ALTER TABLE FEEDBACK ADD CONSTRAINT fk8 FOREIGN KEY (Emp_id) REFERENCES CUSTOMER_SERVICE(Emp_id) ON DELETE CASCADE;
+ALTER TABLE FEEDBACK ADD CONSTRAINT fk9 FOREIGN KEY (Trip_id) REFERENCES TRIP_DETAILS(Trip_id) ON DELETE CASCADE;
+ALTER TABLE FEEDBACK ADD CONSTRAINT fk10 FOREIGN KEY (Usr_id) REFERENCES USER_TBL(Usr_id) ON DELETE CASCADE;
+ALTER TABLE OWNER_TAXI ADD CONSTRAINT fk11 FOREIGN KEY (Taxi_id) REFERENCES TAXI(Taxi_id) ON DELETE CASCADE;
+ALTER TABLE OWNER_TAXI ADD CONSTRAINT fk12 FOREIGN KEY (Owner_id) REFERENCES OWNS(Owner_id) ON DELETE CASCADE;
+ALTER TABLE INDIVIDUAL ADD CONSTRAINT fk13 FOREIGN KEY (Owner_id) REFERENCES OWNS(Owner_id) ON DELETE CASCADE;
+ALTER TABLE TAXI_SERVICE_COMPANY ADD CONSTRAINT fk14 FOREIGN KEY (Owner_id) REFERENCES OWNS(Owner_id) ON DELETE CASCADE;
+
+----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO DRIVER VALUES(1,'Amit','Sharma','Male','9693805870',5,23);
+INSERT INTO DRIVER VALUES(2,'Raghav','Goel','Male','8693665854',4,27);
+INSERT INTO DRIVER VALUES(3,'Mahesh','Mishra','Male','8773805888',2,35);
+INSERT INTO DRIVER VALUES(4,'Gaurav','Singh','Male','3453805870',3,29);
+INSERT INTO DRIVER VALUES(5,'Smriti','Gupta','Female','4693805870',5,45);
+INSERT INTO DRIVER VALUES(6,'Mehak','Sinha','Female','8693877822',5,28);
+INSERT INTO DRIVER VALUES(7,'Prem','Malik','Male','7693805113',4,25);
+INSERT INTO DRIVER VALUES(8,'Priya','Sharma','Female','2693805891',3,28);
+INSERT INTO DRIVER VALUES(9,'Abhishek','Aggarwal','Male','6622215870',2,23);
+INSERT INTO DRIVER VALUES(10,'Meera','Bhalla','Female','1233805866',5,33);
+
+---------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO TAXI VALUES(101,'T0501','BENZE 300',to_date('01/01/2017','dd/mm/yyyy'),'SUV','Available',1);
+INSERT INTO TAXI VALUES(102,'T0502','MACRO 500',to_date('01/01/2016','dd/mm/yyyy'),'Standard','Not Available',2);
+INSERT INTO TAXI VALUES(103,'T0503','MINI 400',to_date('01/01/2009','dd/mm/yyyy'),'Economy','Not Available',3);
+INSERT INTO TAXI VALUES(104,'T0504','XUV 300',to_date('01/01/2010','dd/mm/yyyy'),'SUV','Available',4);
+INSERT INTO TAXI VALUES(105,'T0505','BREZZA 300',to_date('01/01/2019','dd/mm/yyyy'),'Premium','Available',5);
+INSERT INTO TAXI VALUES(106,'T0506','BENZE 900',to_date('01/01/2019','dd/mm/yyyy'),'SUV','Not Available',6);
+INSERT INTO TAXI VALUES(107,'T0507','SWIFT 500',to_date('01/01/2017','dd/mm/yyyy'),'Standard','Available',7);
+INSERT INTO TAXI VALUES(108,'T0508','XUV 700',to_date('01/01/2019','dd/mm/yyyy'),'SUV','Not Available',8);
+INSERT INTO TAXI VALUES(109,'T0509','MINI 300',to_date('01/01/2020','dd/mm/yyyy'),'Minivan','Available',9);
+INSERT INTO TAXI VALUES(110,'T0510','MACRO 900',to_date('01/01/2019','dd/mm/yyyy'),'Premium','Available',10);
+INSERT INTO TAXI VALUES(111,'T0511','WAGON 300',to_date('01/01/2018','dd/mm/yyyy'),'Economy','Not Available',1);
+INSERT INTO TAXI VALUES(112,'T0512','MAGIC 300',to_date('01/01/2011','dd/mm/yyyy'),'Minivan','Available',2);
+
+-----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO USER_TBL VALUES(201,'Raghav','Nayak','9451277009','Male','Bengaluru','105');
+INSERT INTO USER_TBL VALUES(202,'Aryan','Sinha','9876543212','Male','Gurgaon','107');
+INSERT INTO USER_TBL VALUES(203,'Ananya','Pathak','8761122345','Female','Delhi','109');
+INSERT INTO USER_TBL VALUES(204,'Devansh','Merchant','7896544490','Male','Jalandhar','109');
+INSERT INTO USER_TBL VALUES(205,'Akash','Mani','8866459012','Male','Patiala','112');
+INSERT INTO USER_TBL VALUES(206,'Seema','Goel','6578990123','Female','Amritsar','101');
+INSERT INTO USER_TBL VALUES(207,'Vivek','Diwan','7658994321','Male','Dehradun','112');
+INSERT INTO USER_TBL VALUES(208,'Akash','Jha','9866459012','Male','Mumbai','110');
+INSERT INTO USER_TBL VALUES(209,'Pragya','Sharma','9800678443','Female','Chennai','104');
+INSERT INTO USER_TBL VALUES(210,'Aneesha','Sachdev','9993345678','Female','Varanasi','105');
+
+------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO TRIP_DETAILS VALUES(301,to_date('21/01/2023','dd/mm/yyyy'),1100,1,206,101,TO_TIMESTAMP('2023-01-21 06:14:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2023-01-21 08:14:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO TRIP_DETAILS VALUES(302,to_date('28/02/2023','dd/mm/yyyy'),500,5,201,105,TO_TIMESTAMP('2023-02-28 07:00:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2023-02-28 08:30:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO TRIP_DETAILS VALUES(303,to_date('01/03/2023','dd/mm/yyyy'),180,7,202,107,TO_TIMESTAMP('2023-03-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2023-03-01 10:25:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO TRIP_DETAILS VALUES(304,to_date('05/04/2023','dd/mm/yyyy'),250,4,209,104,TO_TIMESTAMP('2023-04-05 09:00:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2023-04-05 12:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO TRIP_DETAILS VALUES(305,to_date('15/03/2023','dd/mm/yyyy'),490,9,204,109,TO_TIMESTAMP('2023-03-15 10:00:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2023-03-15 13:30:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO TRIP_DETAILS VALUES(306,to_date('17/09/2022','dd/mm/yyyy'),360,1,206,101,TO_TIMESTAMP('2022-09-17 10:30:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2022-09-17 12:24:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO TRIP_DETAILS VALUES(307,to_date('27/12/2022','dd/mm/yyyy'),256,10,208,110,TO_TIMESTAMP('2022-12-27 09:30:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2022-12-27 11:30:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO TRIP_DETAILS VALUES(308,to_date('29/11/2022','dd/mm/yyyy'),2500,7,202,107,TO_TIMESTAMP('2022-11-29 08:30:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2022-11-29 10:20:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO TRIP_DETAILS VALUES(309,to_date('31/07/2022','dd/mm/yyyy'),790,2,205,112,TO_TIMESTAMP('2022-07-31 07:30:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2022-07-31 11:02:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO TRIP_DETAILS VALUES(310,to_date('30/05/2022','dd/mm/yyyy'),650,2,207,112,TO_TIMESTAMP('2022-05-30 11:00:00', 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP('2022-05-30 15:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+
+----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO BILL_DETAILS VALUES(401,to_date('21/01/2023','dd/mm/yyyy'),200,100,1100,201,301);
+INSERT INTO BILL_DETAILS VALUES(402,to_date('28/02/2023','dd/mm/yyyy'),100,50,500,203,302);
+INSERT INTO BILL_DETAILS VALUES(403,to_date('01/03/2023','dd/mm/yyyy'),100,50,180,205,303);
+INSERT INTO BILL_DETAILS VALUES(404,to_date('05/04/2023','dd/mm/yyyy'),150,20,250,207,304);
+INSERT INTO BILL_DETAILS VALUES(405,to_date('15/03/2023','dd/mm/yyyy'),100,50,490,209,305);
+INSERT INTO BILL_DETAILS VALUES(406,to_date('17/09/2022','dd/mm/yyyy'),100,50,360,201,306);
+INSERT INTO BILL_DETAILS VALUES(407,to_date('27/12/2022','dd/mm/yyyy'),100,50,256,202,307);
+INSERT INTO BILL_DETAILS VALUES(408,to_date('29/11/2022','dd/mm/yyyy'),1000,500,2500,203,308);
+INSERT INTO BILL_DETAILS VALUES(409,to_date('31/07/2022','dd/mm/yyyy'),300,100,790,204,309);
+INSERT INTO BILL_DETAILS VALUES(410,to_date('30/05/2022','dd/mm/yyyy'),200,100,650,206,310);
+
+-----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO CUSTOMER_SERVICE VALUES(501,'Sara','Maheshwari');
+INSERT INTO CUSTOMER_SERVICE VALUES(502,'Mohak','Gowda');
+
+-----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO FEEDBACK VALUES(601,'bad','seema_goel@gmail.com',501,206,301);
+INSERT INTO FEEDBACK VALUES(602,'good','raghav@gmail.com',502,201,302);
+
+-----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO OWNS VALUES(701,7);
+INSERT INTO OWNS VALUES(702,5);
+
+-----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO OWNER_TAXI VALUES(701,101);
+INSERT INTO OWNER_TAXI VALUES(701,102);
+INSERT INTO OWNER_TAXI VALUES(701,103);
+INSERT INTO OWNER_TAXI VALUES(701,104);
+INSERT INTO OWNER_TAXI VALUES(701,105);
+INSERT INTO OWNER_TAXI VALUES(701,106);
+INSERT INTO OWNER_TAXI VALUES(701,107);
+INSERT INTO OWNER_TAXI VALUES(702,108);
+INSERT INTO OWNER_TAXI VALUES(702,109);
+INSERT INTO OWNER_TAXI VALUES(702,110);
+INSERT INTO OWNER_TAXI VALUES(702,111);
+INSERT INTO OWNER_TAXI VALUES(702,112);
+
+-----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO INDIVIDUAL VALUES(783,'Mahesh',702);
+
+-----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO TAXI_SERVICE_COMPANY VALUES (981,'ITC Car Company',701);
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+/*Procedure Code 1*/
+
+CREATE OR REPLACE PROCEDURE BOOK_TAXI
+( Name IN VARCHAR2
+, v_Address IN VARCHAR2
+, v_Contact IN VARCHAR2
+, Taxi_Model IN VARCHAR2
+, v_Gender IN VARCHAR2
+, Advance IN decimal
+)
+AS
+BEGIN
+DECLARE
+v_usr_id INT :=-1;
+v_Trip_id INT :=-1;
+v_Bill_no INT :=-1;
+v_Taxi_id INT :=-1;
+v_Driver_id INT :=1;
+BEGIN
+select MAX(Usr_id)+1 into v_usr_id from USER_TBL ;
+select MAX(Trip_id)+1 into v_Trip_id from TRIP_DETAILS ;
+select MAX(Bill_no)+1 into v_Bill_no from BILL_DETAILS ;
+select taxi_id, Driver_id into v_Taxi_id,v_Driver_id from TAXI where Status = 'Available' and Taxi_Model = Taxi_Model;
+INSERT INTO USER_TBL values(v_usr_id, SUBSTR (Name, 1, INSTR(Name,' ',1)),SUBSTR (Name, INSTR(Name,' ',1)+1,LENGTH(Name)),v_Contact,v_Gender,v_Address,v_Taxi_id);
+INSERT INTO TRIP_DETAILS values(v_Trip_id,sysdate, 50,v_Driver_id,v_usr_id,v_Taxi_id,sysdate,null);
+INSERT INTO BILL_DETAILS values(v_Bill_no,null,Advance,null,null,v_usr_id,v_Trip_id);
+END ;
+END;
+/
+
+/*Procedure Code 2*/
+
+CREATE OR REPLACE PROCEDURE TRIP_END(v_trip IN INT , v_discount IN Decimal ) AS
+BEGIN
+DECLARE
+v_total_time INT := -1;
+v_bill_no INT :=-1;
+BEGIN
+select extract(day from (sysdate - Strt_time))*24 + extract(hour from (sysdate - Strt_time)) into v_total_time from TRIP_DETAILS where Trip_id = v_trip;
+update TRIP_DETAILS set End_time = sysdate where Trip_id = Trip_id ;
+update BILL_DETAILS set Bill_date = sysdate , Discount_amt = v_discount ,Total_amt = (v_total_time * 15) - v_discount where Trip_id = v_trip ;
+END ;
+END ;
+
+--------------------------------------------------------------------------------------------------------------------
+
+/*TRIGGER 1*/
+
+-- Trigger Creation
+-- this trigger is called when inserted(After) to the feedback table
+-- the trigger will decrease the driver rating by 1 if user feed back is bad for a driver
+
+CREATE OR REPLACE TRIGGER UPDATE_DRIVER_RATING AFTER INSERT ON FEEDBACK
+FOR EACH ROW
+WHEN (NEW.Message like '%Bad Driver%' ) DECLARE
+v_driver_id INT; BEGIN
+select driver_id into v_driver_id from TRIP_DETAILS where trip_id = :NEW.Trip_id;
+update DRIVER set Rating = Rating -1 where driver_id = v_driver_id;
+END;
+/
+
+
+
+/*TRIGGER 2*/
+
+-- Trigger Creation
+-- this trigger is called before the INSERT OR UPDATE ON OWNS table
+-- the trigger will calculate the number of cars owned by the owner and updates the no_of_cars columns in the OWNS table
+
+CREATE OR REPLACE TRIGGER ADD_NO_OF_CARS BEFORE INSERT OR UPDATE ON OWNS
+FOR EACH ROW DECLARE
+v_no_of_cars INT; BEGIN
+select count(Taxi_id) into v_no_of_cars from OWNER_TAXI where Owner_id = :NEW.Owner_id group by Owner_id;
+:NEW.No_Cars := v_no_of_cars; 
+END;
+
+------------------------------------------------------------------------------------------------------------
+
+/*CURSOR*/
+
+DECLARE
+CURSOR C1 IS SELECT * FROM BILL_DETAILS;
+Dnew NUMBER;
+BEGIN
+FOR REC IN C1 LOOP
+IF REC.DISCOUNT_AMT=20 THEN
+Dnew:=30;
+else
+Dnew:=REC.DISCOUNT_AMT;
+END IF;
+Update BILL_DETAILS SET DISCOUNT_AMT=Dnew WHERE BILL_NO=REC.BILL_NO;
+END LOOP;
+END;
+/
+
+-------------------------------------------------------------------------------------------------------------
+
+/*FUNCTION*/
+
+CREATE OR REPLACE FUNCTION TOTAL_SUM (U_id NUMBER)
+RETURN NUMBER IS
+final_sum NUMBER;
+BEGIN
+select sum(Total_amt) into final_sum from BILL_DETAILS where Usr_id=U_id;
+RETURN(final_sum);
+END;
+/
+DECLARE
+U NUMBER;
+FINAL_SUM NUMBER;
+BEGIN
+U:=201; --U:=&Usr_id;
+FINAL_SUM:= TOTAL_SUM(U);
+DBMS_OUTPUT.PUT_LINE('Total amount paid by user with user id ' || U || ' is ' || FINAL_SUM);
+END;
+
+--------------------------------------------------------------------------------------------------------------
+
