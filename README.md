@@ -70,4 +70,4 @@ RideX is a comprehensive taxi management system designed to handle inter-city tr
 1. **Setup the Database**: Install a SQL database management system (e.g., MySQL, PostgreSQL). Can use Oracle Live SQL.
 2. **Create the Database**: Use the provided SQL statements to create the database and tables.
 3. **Insert Data**: Populate the tables using the insert commands.
-4. **Execute Procedures and Triggers**: If applicable, set up and execute the PL/SQL procedures and triggers.
+4. **Execute Procedures and Triggers**: Set up and execute the PL/SQL procedures and triggers.
