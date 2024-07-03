@@ -7,6 +7,7 @@ RideX is a comprehensive taxi management system designed to handle inter-city tr
 ## Table of Contents
 
 - [Project Overview](#project-overview)
+- [Team Members](#team-members)
 - [Tables](#tables)
   - [Taxi Table](#taxi-table)
   - [User Table](#user-table)
@@ -20,6 +21,11 @@ RideX is a comprehensive taxi management system designed to handle inter-city tr
 - [ER Diagram](#er-diagram)
 - [Mapping ER to Relational Schema](#mapping-er-to-relational-schema)
 - [How to Run the Project](#how-to-run-the-project)
+
+## Team Members
+- Pia Gupta (102103394)
+- Anupriya Lathey (102103373)
+- Nitleen Kaur (102003377)
 
 ## Tables
 
